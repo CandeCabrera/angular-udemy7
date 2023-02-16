@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <!--
+          Create a Form with the following Controls and Validators
+          1) Project Name (should not be empty)
+          2) Mail (should not be a empty and a valid email)
+          3) Project Status Dropdown, with three values: 'Stable', 'Critical', 'Finished'
+          4) Submit Button
+
+          Add your own Validator which doesn't allow "Test" as a Project Name
+
+          Also implement that Validator as an async Validator (replace the other one)
+
+          Upon submitting the form, simply print the value to the console
+
+      -->
+
+      <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="pjName">Project Name</label>
+            <input formControlName="pjName" class="form-control" type="text" name="pjName" id="pjName">
+            <span
+              *ngIf="
+                !projectForm.get('pjName').valid &&
+                projectForm.get('pjName').touched
+              "
+              class="help-block">
+              <span *ngIf="projectForm.get('pjName').errors['nameIsForbidden']">This Project Name is invalid!</span>
+              <span *ngIf="projectForm.get('pjName').errors['required']">This field is required!</span>
+              
+              
+            </span>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input formControlName="email" class="form-control" type="email" name="email" id="email">
+          <span
+              *ngIf="
+                !projectForm.get('email').valid &&
+                projectForm.get('email').touched
+              "
+            >
+              Please enter a valid email
+            </span>
+        </div>
+
+        <div class="form-group">
+          <label for="status">Status</label>
+          <select formControlName="status" class="form-control" name="status" id="status">
+            <option value="stable">Stable</option>
+            <option value="critical">Critical</option>
+            <option value="finished">Finished</option>
+
+          </select>
+        </div>
+        <button class="btn btn-success" type="submit">Submit</button>
+      </form>
+    </div>
+    
+  </div>
+  <hr>
+  <div *ngIf="project">
+    <h4>Project Data</h4>
+    <p><b>Project Name: </b>{{project.pjName}} </p>
+    <p><b>Email: </b>{{project.email}} </p>
+    <p><b>Status: </b>{{project.status}} </p>
+  </div>
+</div>
